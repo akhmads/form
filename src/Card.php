@@ -11,22 +11,22 @@ class Card
 	protected static $editor = null;
 	private static $_instance = null;
 
-    public function __construct() { }
+	public function __construct() { }
 	
 	public static function make( $content = null )
-    {
-        if (self::$_instance === null)
+	{
+		if (self::$_instance === null)
 		{
-            self::$_instance = new self;
-        }
+			self::$_instance = new self;
+		}
 		
 		if( $content !== null )
 		{
 			self::$_instance->content( $content );
 		}
 
-        return self::$_instance;
-    }
+		return self::$_instance;
+	}
 
 	public function title( $title )
 	{
