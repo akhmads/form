@@ -12,10 +12,9 @@ class InputText
 	protected static $extra = [];
 	protected static $value = '';
 	protected static $editor = '';
-	
 	private static $_instance = null;
 
-    public function __construct() { }
+	public function __construct() { }
 	
 	public function defaultTheme()
 	{
