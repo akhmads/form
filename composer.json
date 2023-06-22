@@ -1,0 +1,16 @@
+{
+    "name": "akhmads/form",
+    "description": "Form builder",
+    "autoload": {
+        "psr-4": {
+            "Akhmads\\Form\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Akhmad",
+            "email": "akhmadshaleh@gmail.com"
+        }
+    ],
+    "require": {}
+}
