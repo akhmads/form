@@ -2,10 +2,9 @@
 
 namespace Akhmads\Form;
 
-class Card
+class Row
 {
-	protected static $title = null;
-	protected static $content = null;
+	protected static $col = [];
 	protected static $class = [];
 	protected static $extra = [];
 	protected static $editor = null;
@@ -19,35 +18,34 @@ class Card
 		{
 			self::$_instance = new self;
 		}
-		
-		if( $content !== null )
-		{
-			self::$_instance->content( $content );
-		}
 
 		return self::$_instance;
 	}
 
-	public function title( $title )
+	public function col6()
 	{
-		self::$title = $title;
+		$args = func_get_args();
+		$args = array_merge(['col-md-6'], $args);
+		call_user_func_array( [ self::$_instance, 'col' ], $args );
 		return $this;
 	}
-
-	public function content( $args = [] )
+	
+	public function col()
 	{
-		//$args = func_get_args();
-		$content = '';
-		if( is_array($args) AND count($args) > 0 )
+		$args = func_get_args();
+		$type = isset($args[0]) ? $args[0] : '';
+		unset($args[0]);
+		
+		$col = '';
+		if( count($args) > 0 )
 		{
 			foreach( $args as $arg )
 			{
-				$content .= $arg;
+				$col .= $arg;
 			}
 		}
-		self::$content = $content;
-		
-		return self::render();
+		self::$col[] = [ 'class' => $type, 'content' => $col ];
+		return $this;
 	}
 	
 	public function addClass( $class )
@@ -67,22 +65,20 @@ class Card
 		self::$editor = $editor;
 		return $this;
 	}
-	
-	public function getTitle()
-	{
-		if( self::$title !== null )
-		{
-			self::$title = sprintf(
-				'<div class="card-header"><h3 class="card-title">%s</h3></div>',
-				self::$title
-			);
-		}
-		return self::$title;
-	}
 
 	public function getContent()
 	{
-		return self::$content;
+		$col = [];
+		if( count(self::$col) > 0 )
+		{
+			foreach( self::$col as $arr )
+			{
+				$class = isset($arr['class']) ? $arr['class'] : '';
+				$content = isset($arr['content']) ? $arr['content'] : '';
+				$col[] = sprintf('<div class="%s">%s</div>', $class, $content);
+			}
+		}
+		return implode("",$col);
 	}
 
 	public function getClass()
@@ -111,9 +107,8 @@ class Card
 	public function render()
 	{
 		$return = sprintf(
-			'<div class="card %s">%s<div class="card-body">%s</div></div>',
+			'<div class="row %s">%s</div>',
 			self::getClass(),
-			self::getTitle(),
 			self::getContent()
 		);
 		

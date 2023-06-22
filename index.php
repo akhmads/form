@@ -1,28 +1,23 @@
 <?php
 
-use \Akhmads\Form\InputText;
+use \Akhmads\Form\Row;
 use \Akhmads\Form\Card;
+use \Akhmads\Form\InputText;
 
 require_once 'vendor/autoload.php';
+require_once 'header.php';
 
-$editor = function( $element ) {
-	return '<p>'.$element.'</p>';
-};
-
-include 'header.php';
-
-Card::make()->title('Sample Form')->content(
-
-	InputText::make('TITLE')
-		->label('Title')
-		->addClass('some-class')
-		->editor($editor)
-		->render(),
+Row::make()->col('col-md-6',
 	
-	InputText::make('NAME')
-		->label('Name')
-		->render()
-		
+	Card::make()->title('Sample Form')->content([
+		InputText::make('TITLE')->label('Title')->render(),
+		InputText::make('NAME')->label('Name')->render(),
+	])
+
+)->col('col-md-6',
+
+	Card::make()->title('Another Form')->content(['<p>Easy Pz Lemon Squeeze</p>'])
+
 )->out();
 
-include 'footer.php';
+require_once 'footer.php';
