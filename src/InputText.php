@@ -30,19 +30,19 @@ class InputText
 	}
 	
 	public static function make( $name = null )
-    {
-        if (self::$_instance === null)
+	{
+		if (self::$_instance === null)
 		{
-            self::$_instance = new self;
-        }
-		
+			self::$_instance = new self;
+		}
+
 		if( $name !== null )
 		{
 			self::$_instance->extra('name', $name);
 		}
 
-        return self::$_instance;
-    }
+		return self::$_instance;
+	}
 
 	public function theme( $theme )
 	{
