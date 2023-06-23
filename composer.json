@@ -6,13 +6,11 @@
             "Akhmads\\Form\\": "src/"
         }
     },
+	"license": "MIT",
     "authors": [
         {
             "name": "Akhmad",
             "email": "akhmadshaleh@gmail.com"
         }
-    ],
-    "require": {
-        "almasaeed2010/adminlte": "~3.2"
-    }
+    ]
 }
