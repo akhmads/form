@@ -42,8 +42,8 @@ Input text inside Card
 ```php
 Card::make()->title('Sample Form')->content(
 	
-		InputText::make('TITLE')->label('Title*')->render(),
-		InputText::make('DATE')->label('Date*')->type('date')->render()
+	InputText::make('TITLE')->label('Title*')->render(),
+	InputText::make('DATE')->label('Date*')->type('date')->render()
 
 )->render();
 ```
