@@ -32,5 +32,5 @@ use \Akhmads\Form\InputText;
 
 require_once 'vendor/autoload.php';
 
-InputText::make('FULL_NAME')->label('Full Name')->render(),
+InputText::make('FULL_NAME')->label('Full Name')->render();
 ```
