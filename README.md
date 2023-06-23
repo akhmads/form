@@ -40,6 +40,9 @@ InputText::make('FULL_NAME')->label('Full Name')->render();
 Input text inside Card
 
 ```php
+use \Akhmads\Form\Card;
+use \Akhmads\Form\InputText;
+
 Card::make()->title('Sample Form')->content(
 	
 	InputText::make('TITLE')->label('Title*')->render(),
