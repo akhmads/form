@@ -18,6 +18,6 @@ PHP class for HTML form builder and bootstrap elements
 composer require akhmads/form
 ```
 On your php code
-```
+```php
 require_once 'vendor/autoload.php';
 ```
