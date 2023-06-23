@@ -37,4 +37,15 @@ require_once 'vendor/autoload.php';
 InputText::make('FULL_NAME')->label('Full Name')->render();
 ```
 
+Input text inside Card
+
+```php
+Card::make()->title('Sample Form')->content(
+	
+		InputText::make('TITLE')->label('Title*')->render(),
+		InputText::make('DATE')->label('Date*')->type('date')->render()
+
+)->render();
+```
+
 Documentation is on progress :)
