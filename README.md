@@ -3,20 +3,22 @@ PHP class for HTML form builder and bootstrap elements
 
 ## Available form elements
 - Input Text
-- Textarea
-- Select
+- Textarea (on progress)
+- Select (on progress)
+- Checkbox (on progress)
+- Select2 (on progress)
 
 ## Available bootstrap elements
 - Grid
 - Card
-- Button
+- Button (on progress)
 
 ## Usage
 
 Install via composer
 
 ```
-composer require akhmads/form
+composer require akhmads/form:dev-master
 ```
 
 On your php code
@@ -34,3 +36,5 @@ require_once 'vendor/autoload.php';
 
 InputText::make('FULL_NAME')->label('Full Name')->render();
 ```
+
+Documentation is on progress :)
