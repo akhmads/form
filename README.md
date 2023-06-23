@@ -13,11 +13,24 @@ PHP class for HTML form builder and bootstrap elements
 
 ## Usage
 
-### Install via composer
+Install via composer
+
 ```
 composer require akhmads/form
 ```
+
 On your php code
+
 ```php
 require_once 'vendor/autoload.php';
+```
+
+Create a input Text
+
+```php
+use \Akhmads\Form\InputText;
+
+require_once 'vendor/autoload.php';
+
+InputText::make('FULL_NAME')->label('Full Name')->render(),
 ```
