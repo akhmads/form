@@ -12,5 +12,7 @@
             "email": "akhmadshaleh@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "almasaeed2010/adminlte": "~3.2"
+    }
 }

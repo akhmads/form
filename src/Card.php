@@ -106,15 +106,13 @@ class Card
 		return implode(" ",self::$class);
 	}
 
+	// ----------------------------------------------
+	// Extra attribute
+	// ----------------------------------------------
+
 	public function extra( $attr, $value )
 	{
 		self::$extra[$attr] = $value;
-		return $this;
-	}
-
-	public function editor( $editor )
-	{
-		self::$editor = $editor;
 		return $this;
 	}
 
@@ -131,11 +129,25 @@ class Card
 		return implode(" ",$extra);
 	}
 
+	// ----------------------------------------------
+	// Editor with closure function
+	// ----------------------------------------------
+
+	public function editor( $editor )
+	{
+		self::$editor = $editor;
+		return $this;
+	}
+
 	public function getEditor()
 	{
 		return self::$editor;
 	}
-	
+
+	// ----------------------------------------------
+	// Render an element
+	// ----------------------------------------------
+
 	public function render()
 	{
 		$return = sprintf(
@@ -153,6 +165,10 @@ class Card
 		
 		return $return;
 	}
+
+	// ----------------------------------------------
+	// Output an element
+	// ----------------------------------------------
 
 	public function out()
 	{

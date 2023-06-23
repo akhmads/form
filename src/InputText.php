@@ -12,10 +12,10 @@ class InputText
 	protected static $theme;
 	protected static $type;
 	protected static $name;
+	protected static $value;
 	protected static $label;
 	protected static $class;
 	protected static $extra;
-	protected static $value;
 	protected static $editor;
 	private static $_instance = null;
 
@@ -29,7 +29,7 @@ class InputText
 	public function defaultTheme()
 	{
 		self::addClass('form-control');
-		self::editor(function($element){
+		self::editor( function($element) {
 			$element = sprintf(
 				'<div class="form-group"><label class="label-sm mb-0">%s</label>%s</div>',
 				self::getLabel(),
@@ -68,15 +68,13 @@ class InputText
 		// reset variable
 		self::$type = 'text';
 		self::$name = null;
+		self::$value = null;
 		self::$class = [];
 		self::$extra = [];
-		self::$value = null;
-		self::$editor = null;
+		self::$editor = [];
 
-		if( $name !== null )
-		{
-			self::$_instance->extra('name', $name);
-		}
+		// set name attribute
+		self::$_instance->name( $name );
 
 		return self::$_instance;
 	}
@@ -97,18 +95,18 @@ class InputText
 	}
 
 	// ----------------------------------------------
-	// Label attributes
+	// Name attributes
 	// ----------------------------------------------
 
-	public function label( $label )
+	public function name( $name )
 	{
-		self::$label = $label;
+		self::$name = $name;
 		return $this;
 	}
 
-	public function getLabel()
+	public function getName()
 	{
-		return str_replace( '*', '<i style="color:red;">*</i>', self::$label );
+		return self::$name;
 	}
 
 	// ----------------------------------------------
@@ -124,6 +122,21 @@ class InputText
 	public function getValue()
 	{
 		return self::$value;
+	}
+
+	// ----------------------------------------------
+	// Label attributes
+	// ----------------------------------------------
+
+	public function label( $label )
+	{
+		self::$label = $label;
+		return $this;
+	}
+
+	public function getLabel()
+	{
+		return str_replace( '*', '<i style="color:red;">*</i>', self::$label );
 	}
 
 	// ----------------------------------------------
@@ -170,7 +183,7 @@ class InputText
 
 	public function editor( $editor )
 	{
-		self::$editor = $editor;
+		self::$editor[] = $editor;
 		return $this;
 	}
 
@@ -180,7 +193,7 @@ class InputText
 	}
 
 	// ----------------------------------------------
-	// Render a element
+	// Render an element
 	// ----------------------------------------------
 	
 	public function render()
@@ -197,25 +210,32 @@ class InputText
 
 		// render all attributes to HTML template
 		$return = sprintf(
-			'<input type="%s" value="%s" class="%s" %s>',
+			'<input type="%s" name="%s" value="%s" class="%s" %s>',
 			self::getType(),
+			self::getName(),
 			self::getValue(),
 			self::getClass(),
 			self::getExtra()
 		);
 		
-		// if there is a closure function for edit content of attribute
-		if( self::$editor !== '' )
+		// closure function for edit content of attribute
+		if( is_array(self::$editor) AND count(self::$editor) > 0 )
 		{
-			$editor = self::getEditor();
-			$return = $editor( $return );
+			self::$editor = array_reverse(self::$editor);
+			if(self::$name == 'TITLE'){
+				print_r(self::$editor);
+			}
+			foreach( self::$editor as $editor )
+			{
+				$return = $editor( $return );
+			}
 		}
-		
+
 		return $return;
 	}
 
 	// ----------------------------------------------
-	// Output a element
+	// Output an element
 	// ----------------------------------------------
 
 	public function out()
