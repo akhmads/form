@@ -9,14 +9,14 @@ namespace Akhmads\Form;
 	
 class InputText
 {
-	protected static $theme = '';
-	protected static $type = 'text';
-	protected static $name = '';
-	protected static $label = '';
-	protected static $class = [];
-	protected static $extra = [];
-	protected static $value = '';
-	protected static $editor = '';
+	protected static $theme;
+	protected static $type;
+	protected static $name;
+	protected static $label;
+	protected static $class;
+	protected static $extra;
+	protected static $value;
+	protected static $editor;
 	private static $_instance = null;
 
 	public function __construct() { }
@@ -55,15 +55,23 @@ class InputText
 	}
 
 	// ----------------------------------------------
-	// Making a element
+	// Create an element
 	// ----------------------------------------------
 
 	public static function make( $name = null )
-	{
+	{		
 		if (self::$_instance === null)
 		{
 			self::$_instance = new self;
 		}
+
+		// reset variable
+		self::$type = 'text';
+		self::$name = null;
+		self::$class = [];
+		self::$extra = [];
+		self::$value = null;
+		self::$editor = null;
 
 		if( $name !== null )
 		{
@@ -71,6 +79,21 @@ class InputText
 		}
 
 		return self::$_instance;
+	}
+
+	// ----------------------------------------------
+	// Type attributes
+	// ----------------------------------------------
+
+	public function type( $type )
+	{
+		self::$type = $type;
+		return $this;
+	}
+
+	public function getType()
+	{
+		return self::$type;
 	}
 
 	// ----------------------------------------------
@@ -85,7 +108,7 @@ class InputText
 
 	public function getLabel()
 	{
-		return self::$label;
+		return str_replace( '*', '<i style="color:red;">*</i>', self::$label );
 	}
 
 	// ----------------------------------------------
@@ -175,7 +198,7 @@ class InputText
 		// render all attributes to HTML template
 		$return = sprintf(
 			'<input type="%s" value="%s" class="%s" %s>',
-			self::$type,
+			self::getType(),
 			self::getValue(),
 			self::getClass(),
 			self::getExtra()

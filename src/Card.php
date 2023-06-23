@@ -2,23 +2,39 @@
 
 namespace Akhmads\Form;
 
+// ----------------------------------------------
+// Card
+// Bootstrap Card builder
+// ----------------------------------------------
+
 class Card
 {
-	protected static $title = null;
-	protected static $content = null;
-	protected static $class = [];
+	protected static $title;
+	protected static $content;
+	protected static $class;
 	protected static $extra = [];
 	protected static $editor = null;
 	private static $_instance = null;
 
 	public function __construct() { }
 	
+	// ----------------------------------------------
+	// Create an element
+	// ----------------------------------------------
+
 	public static function make( $content = null )
 	{
 		if (self::$_instance === null)
 		{
 			self::$_instance = new self;
 		}
+		
+		// reset variable
+		self::$title = null;
+		self::$content = null;
+		self::$class = [];
+		self::$extra = [];
+		self::$editor = null;
 		
 		if( $content !== null )
 		{
@@ -28,11 +44,31 @@ class Card
 		return self::$_instance;
 	}
 
+	// ----------------------------------------------
+	// Card Title
+	// ----------------------------------------------
+
 	public function title( $title )
 	{
 		self::$title = $title;
 		return $this;
 	}
+
+	public function getTitle()
+	{
+		if( self::$title !== null )
+		{
+			self::$title = sprintf(
+				'<div class="card-header"><h3 class="card-title">%s</h3></div>',
+				self::$title
+			);
+		}
+		return self::$title;
+	}
+
+	// ----------------------------------------------
+	// Card Content
+	// ----------------------------------------------
 
 	public function content()
 	{
@@ -49,11 +85,25 @@ class Card
 		
 		return self::render();
 	}
-	
+
+	public function getContent()
+	{
+		return self::$content;
+	}
+
+	// ----------------------------------------------
+	// Class attribute
+	// ----------------------------------------------
+
 	public function addClass( $class )
 	{
 		self::$class[] = $class;
 		return $this;
+	}
+
+	public function getClass()
+	{
+		return implode(" ",self::$class);
 	}
 
 	public function extra( $attr, $value )
@@ -66,28 +116,6 @@ class Card
 	{
 		self::$editor = $editor;
 		return $this;
-	}
-	
-	public function getTitle()
-	{
-		if( self::$title !== null )
-		{
-			self::$title = sprintf(
-				'<div class="card-header"><h3 class="card-title">%s</h3></div>',
-				self::$title
-			);
-		}
-		return self::$title;
-	}
-
-	public function getContent()
-	{
-		return self::$content;
-	}
-
-	public function getClass()
-	{
-		return implode(" ",self::$class);
 	}
 
 	public function getExtra()

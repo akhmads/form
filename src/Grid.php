@@ -2,12 +2,12 @@
 
 namespace Akhmads\Form;
 
-class Row
+class Grid
 {
-	protected static $col = [];
-	protected static $class = [];
-	protected static $extra = [];
-	protected static $editor = null;
+	protected static $col;
+	protected static $class;
+	protected static $extra;
+	protected static $editor;
 	private static $_instance = null;
 
 	public function __construct() { }
@@ -18,11 +18,16 @@ class Row
 		{
 			self::$_instance = new self;
 		}
+		
+		self::$col = [];
+		self::$class = [];
+		self::$extra = [];
+		self::$editor = null;
 
 		return self::$_instance;
 	}
 
-	public function col6()
+	public function col_6()
 	{
 		$args = func_get_args();
 		$args = array_merge(['col-md-6'], $args);
