@@ -27,6 +27,14 @@ On your php code
 require_once 'vendor/autoload.php';
 ```
 
+Dont forget add bootstrap css and js
+
+```php
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+```
+
 Create a input Text
 
 ```php
