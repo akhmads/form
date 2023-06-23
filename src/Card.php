@@ -34,9 +34,9 @@ class Card
 		return $this;
 	}
 
-	public function content( $args = [] )
+	public function content()
 	{
-		//$args = func_get_args();
+		$args = func_get_args();
 		$content = '';
 		if( is_array($args) AND count($args) > 0 )
 		{
