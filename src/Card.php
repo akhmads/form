@@ -83,7 +83,7 @@ class Card
 		}
 		self::$content = $content;
 		
-		return self::render();
+		return $this;
 	}
 
 	public function getContent()
@@ -135,7 +135,7 @@ class Card
 
 	public function editor( $editor )
 	{
-		self::$editor = $editor;
+		self::$editor[] = $editor;
 		return $this;
 	}
 
@@ -150,6 +150,7 @@ class Card
 
 	public function render()
 	{
+		// render all attributes to HTML template
 		$return = sprintf(
 			'<div class="card %s">%s<div class="card-body">%s</div></div>',
 			self::getClass(),
@@ -157,10 +158,16 @@ class Card
 			self::getContent()
 		);
 		
-		if( self::$editor !== null )
+		// editor with closure function for edit content of attribute
+		if( is_array(self::$editor) AND count(self::$editor) > 0 )
 		{
-			$editor = self::getEditor();
-			$return = $editor( $return );
+			// first declaration is first execution
+			self::$editor = array_reverse(self::$editor);
+			
+			foreach( self::$editor as $editor )
+			{
+				$return = $editor( $return );
+			}
 		}
 		
 		return $return;

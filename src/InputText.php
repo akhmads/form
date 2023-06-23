@@ -228,10 +228,10 @@ class InputText
 			self::getExtra()
 		);
 		
-		// closure function for edit content of attribute
+		// editor with closure function for edit content of attribute
 		if( is_array(self::$editor) AND count(self::$editor) > 0 )
 		{
-			// first declare is first execution
+			// first declaration is first execution
 			self::$editor = array_reverse(self::$editor);
 			
 			foreach( self::$editor as $editor )
