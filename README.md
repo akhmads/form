@@ -10,3 +10,14 @@ PHP class for HTML form builder and bootstrap elements
 - Grid
 - Card
 - Button
+
+## Usage
+
+### Install via composer
+```
+composer require akhmads/form
+```
+On your php code
+```
+require_once 'vendor/autoload.php';
+```
