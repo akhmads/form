@@ -6,7 +6,9 @@
             "Akhmads\\Form\\": "src/"
         }
     },
-	"license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
+    "license": "MIT",
     "authors": [
         {
             "name": "Akhmad",
