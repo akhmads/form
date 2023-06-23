@@ -32,7 +32,7 @@ Create a input Text
 ```php
 use \Akhmads\Form\InputText;
 
-InputText::make('FULL_NAME')->label('Full Name')->render();
+InputText::make('FULL_NAME')->label('Full Name')->out();
 ```
 
 Input text inside Card
@@ -46,7 +46,7 @@ Card::make()->title('Sample Form')->content(
 	InputText::make('TITLE')->label('Title*')->render(),
 	InputText::make('DATE')->label('Date*')->type('date')->render()
 
-)->render();
+)->out();
 ```
 
 Documentation is on progress :)
