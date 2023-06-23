@@ -28,12 +28,22 @@ class InputText
 
 	public function defaultTheme()
 	{
+		// add .form-control class
 		self::addClass('form-control');
-		self::editor( function($element) {
+		
+		// capture error message from codeigniter 3
+		$form_error = '';
+		if( function_exists('form_error') ) {
+			$form_error = form_error(self::$name,'<p class="form-error">','</p>');
+		}
+		
+		// create wrapping element
+		self::editor( function($element) use ($form_error) {
 			$element = sprintf(
-				'<div class="form-group"><label class="label-sm mb-0">%s</label>%s</div>',
+				'<div class="form-group"><label class="label-sm mb-0">%s</label>%s%s</div>',
 				self::getLabel(),
-				$element
+				$element,
+				$form_error
 			);
 			return $element;
 		});
@@ -221,10 +231,9 @@ class InputText
 		// closure function for edit content of attribute
 		if( is_array(self::$editor) AND count(self::$editor) > 0 )
 		{
+			// first declare is first execution
 			self::$editor = array_reverse(self::$editor);
-			if(self::$name == 'TITLE'){
-				print_r(self::$editor);
-			}
+			
 			foreach( self::$editor as $editor )
 			{
 				$return = $editor( $return );
