@@ -14,6 +14,7 @@ class InputText
 	protected static $name;
 	protected static $value;
 	protected static $label;
+	protected static $wrap;
 	protected static $class;
 	protected static $extra;
 	protected static $editor;
@@ -38,7 +39,7 @@ class InputText
 		}
 		
 		// create wrapping element
-		self::editor( function($element) use ($form_error) {
+		self::wrap( function($element) use ($form_error) {
 			$element = sprintf(
 				'<div class="form-group"><label class="label-sm mb-0">%s</label>%s%s</div>',
 				self::getLabel(),
@@ -79,6 +80,8 @@ class InputText
 		self::$type = 'text';
 		self::$name = null;
 		self::$value = null;
+		self::$label = null;
+		self::$wrap = null;
 		self::$class = [];
 		self::$extra = [];
 		self::$editor = [];
@@ -86,6 +89,9 @@ class InputText
 		// set name attribute
 		self::$_instance->name( $name );
 
+		// default theme
+		self::$_instance->defaultTheme();
+		
 		return self::$_instance;
 	}
 
@@ -150,6 +156,21 @@ class InputText
 	}
 
 	// ----------------------------------------------
+	// Element wrapper
+	// ----------------------------------------------
+
+	public function wrap( $wrap )
+	{
+		self::$wrap = $wrap;
+		return $this;
+	}
+
+	public function getWrap()
+	{
+		return self::$wrap;
+	}
+
+	// ----------------------------------------------
 	// Class attributes
 	// ----------------------------------------------
 
@@ -208,13 +229,9 @@ class InputText
 	
 	public function render()
 	{
-		if( self::$theme == '' )
+		$theme = self::getTheme();
+		if( $theme AND is_callable($theme) )
 		{
-			self::defaultTheme();
-		}
-		else
-		{
-			$theme = self::getTheme();
 			$theme( self::$_instance );
 		}
 
@@ -238,6 +255,13 @@ class InputText
 			{
 				$return = $editor( $return );
 			}
+		}
+
+		// add wrapper
+		$wrap = self::getWrap();
+		if( $wrap AND is_callable($wrap) )
+		{
+			$return = $wrap( $return );
 		}
 
 		return $return;
