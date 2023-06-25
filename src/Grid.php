@@ -235,8 +235,9 @@ class Grid
 	{
 		// render all attributes to HTML template
 		$return = sprintf(
-			'<div class="row %s">%s</div>',
+			'<div class="row %s" %s>%s</div>',
 			self::getClass(),
+			self::getExtra(),
 			self::getContent()
 		);
 		
