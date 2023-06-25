@@ -152,8 +152,9 @@ class Card
 	{
 		// render all attributes to HTML template
 		$return = sprintf(
-			'<div class="card %s">%s<div class="card-body">%s</div></div>',
+			'<div class="card %s" %s>%s<div class="card-body">%s</div></div>',
 			self::getClass(),
+			self::getExtra(),
 			self::getTitle(),
 			self::getContent()
 		);
