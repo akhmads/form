@@ -11,7 +11,7 @@ PHP class for HTML form builder and bootstrap elements
 ## Available bootstrap elements
 - Grid
 - Card
-- Button (on progress)
+- Button
 
 ## Usage
 
