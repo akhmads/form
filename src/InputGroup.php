@@ -4,17 +4,15 @@ namespace Akhmads\Form;
 
 // ----------------------------------------------
 // Button
-// HTML form builder for button
+// HTML form builder for Input Group
 // ----------------------------------------------
 	
-class Button
+class InputGroup
 {
 	protected static $theme;
-	protected static $type;
-	protected static $name;
-	protected static $value;
-	protected static $label;
-	protected static $wrap;
+	protected static $content;
+	protected static $append;
+	protected static $prepend;
 	protected static $class;
 	protected static $extra;
 	protected static $editor;
@@ -30,7 +28,7 @@ class Button
 	public function defaultTheme()
 	{
 		// add .form-control class
-		self::addClass('btn');
+		self::addClass('input-group');
 	}
 
 	// ----------------------------------------------
@@ -52,7 +50,7 @@ class Button
 	// Create an element
 	// ----------------------------------------------
 
-	public static function make( $name = null )
+	public static function make( $content = null )
 	{		
 		if (self::$_instance === null)
 		{
@@ -60,17 +58,15 @@ class Button
 		}
 
 		// reset variable
-		self::$type = 'button';
-		self::$name = null;
-		self::$value = null;
-		self::$label = null;
-		self::$wrap = null;
+		self::$content = null;
+		self::$append = null;
+		self::$prepend = null;
 		self::$class = [];
 		self::$extra = [];
 		self::$editor = [];
 
 		// set name attribute
-		self::$_instance->name( $name );
+		self::$_instance->content( $content );
 
 		// default theme
 		self::$_instance->defaultTheme();
@@ -79,78 +75,62 @@ class Button
 	}
 
 	// ----------------------------------------------
-	// Type attributes
+	// Content Elements
 	// ----------------------------------------------
 
-	public function type( $type )
+	public function content( $content )
 	{
-		self::$type = $type;
+		self::$content = $content;
 		return $this;
 	}
 
-	public function getType()
+	public function getContent()
 	{
-		return self::$type;
+		return self::$content;
 	}
 
 	// ----------------------------------------------
-	// Name attributes
+	// Append Elements
 	// ----------------------------------------------
 
-	public function name( $name )
+	public function append( $append )
 	{
-		self::$name = $name;
+		self::$append = $append;
 		return $this;
 	}
 
-	public function getName()
+	public function getAppend()
 	{
-		return self::$name;
+		if( self::$append !== null )
+		{
+			self::$append = sprintf(
+				'<span class="input-group-append"><span class="input-group-text">%s</span></span>',
+				self::$append
+			);
+		}
+		return self::$append;
 	}
 
 	// ----------------------------------------------
-	// Value attributes
+	// Prepend Elements
 	// ----------------------------------------------
 
-	public function value( $value )
+	public function prepend( $prepend )
 	{
-		self::$value = $value;
+		self::$prepend = $prepend;
 		return $this;
 	}
 
-	public function getValue()
+	public function getPrepend()
 	{
-		return self::$value;
-	}
-
-	// ----------------------------------------------
-	// Label attributes
-	// ----------------------------------------------
-
-	public function label( $label )
-	{
-		self::$label = $label;
-		return $this;
-	}
-
-	public function getLabel()
-	{
-		return self::$label;
-	}
-
-	// ----------------------------------------------
-	// Element wrapper
-	// ----------------------------------------------
-
-	public function wrap( $wrap )
-	{
-		self::$wrap = $wrap;
-		return $this;
-	}
-
-	public function getWrap()
-	{
-		return self::$wrap;
+		if( self::$prepend !== null )
+		{
+			self::$prepend = sprintf(
+				'<span class="input-group-prepend"><span class="input-group-text">%s</span></span>',
+				self::$prepend
+			);
+		}
+		return self::$prepend;
 	}
 
 	// ----------------------------------------------
@@ -220,13 +200,12 @@ class Button
 
 		// render all attributes to HTML template
 		$return = sprintf(
-			'<button type="%s" name="%s" value="%s" class="%s" %s>%s</button>',
-			self::getType(),
-			self::getName(),
-			self::getValue(),
+			'<div class="%s" %s>%s%s%s</div>',
 			self::getClass(),
 			self::getExtra(),
-			self::getLabel()
+			self::getPrepend(),
+			self::getContent(),
+			self::getAppend()
 		);
 		
 		// editor with closure function for edit content of attribute
@@ -239,13 +218,6 @@ class Button
 			{
 				$return = $editor( $return );
 			}
-		}
-
-		// add wrapper
-		$wrap = self::getWrap();
-		if( $wrap AND is_callable($wrap) )
-		{
-			$return = $wrap( $return );
 		}
 
 		return $return;
