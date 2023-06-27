@@ -13,6 +13,8 @@ class InputGroup
 	protected static $content;
 	protected static $append;
 	protected static $prepend;
+	protected static $appendWithText;
+	protected static $prependWithText;
 	protected static $class;
 	protected static $extra;
 	protected static $editor;
@@ -61,6 +63,8 @@ class InputGroup
 		self::$content = null;
 		self::$append = null;
 		self::$prepend = null;
+		self::$appendWithText = null;
+		self::$prependWithText = null;
 		self::$class = [];
 		self::$extra = [];
 		self::$editor = [];
@@ -93,9 +97,10 @@ class InputGroup
 	// Append Elements
 	// ----------------------------------------------
 
-	public function append( $append )
+	public function append( $append, $withText = TRUE )
 	{
 		self::$append = $append;
+		self::$appendWithText = $withText;
 		return $this;
 	}
 
@@ -103,8 +108,16 @@ class InputGroup
 	{
 		if( self::$append !== null )
 		{
+			if( self::$appendWithText )
+			{
+				$template = '<span class="input-group-append"><span class="input-group-text">%s</span></span>';
+			}
+			else
+			{
+				$template = '<span class="input-group-append">%s</span>';
+			}
 			self::$append = sprintf(
-				'<span class="input-group-append"><span class="input-group-text">%s</span></span>',
+				$template,
 				self::$append
 			);
 		}
@@ -115,9 +128,10 @@ class InputGroup
 	// Prepend Elements
 	// ----------------------------------------------
 
-	public function prepend( $prepend )
+	public function prepend( $prepend, $withText = TRUE )
 	{
 		self::$prepend = $prepend;
+		self::$prependWithText = $withText;
 		return $this;
 	}
 
@@ -125,8 +139,16 @@ class InputGroup
 	{
 		if( self::$prepend !== null )
 		{
+			if( self::$prependWithText )
+			{
+				$template = '<span class="input-group-prepend"><span class="input-group-text">%s</span></span>';
+			}
+			else
+			{
+				$template = '<span class="input-group-prepend">%s</span>';
+			}
 			self::$prepend = sprintf(
-				'<span class="input-group-prepend"><span class="input-group-text">%s</span></span>',
+				$template,
 				self::$prepend
 			);
 		}
