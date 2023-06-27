@@ -12,6 +12,7 @@ PHP class for HTML form builder and bootstrap elements
 - Grid
 - Card
 - Button
+- Input Group
 
 ## Usage
 
