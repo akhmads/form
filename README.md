@@ -4,7 +4,7 @@ PHP class for HTML form builder and bootstrap elements
 ## Available form elements
 - Input Text
 - Textarea
-- Select (on progress)
+- Select
 - Checkbox (on progress)
 - Select2 (on progress)
 
