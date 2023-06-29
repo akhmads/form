@@ -14,6 +14,7 @@ class Button
 	protected static $name;
 	protected static $value;
 	protected static $label;
+	protected static $icon;
 	protected static $wrap;
 	protected static $class;
 	protected static $extra;
@@ -64,6 +65,7 @@ class Button
 		self::$name = null;
 		self::$value = null;
 		self::$label = null;
+		self::$icon = null;
 		self::$wrap = null;
 		self::$class = [];
 		self::$extra = [];
@@ -136,6 +138,25 @@ class Button
 	public function getLabel()
 	{
 		return self::$label;
+	}
+
+	// ----------------------------------------------
+	// Icon
+	// ----------------------------------------------
+
+	public function icon( $icon )
+	{
+		self::$icon = $icon;
+		return $this;
+	}
+
+	public function getIcon()
+	{
+		$icon = '';
+		if( self::$icon ){
+			$icon = sprintf('<i class="%s mr-2"></i>', self::$icon);
+		}
+		return $icon;
 	}
 
 	// ----------------------------------------------
@@ -220,12 +241,13 @@ class Button
 
 		// render all attributes to HTML template
 		$return = sprintf(
-			'<button type="%s" name="%s" value="%s" class="%s" %s>%s</button>',
+			'<button type="%s" name="%s" value="%s" class="%s" %s>%s%s</button>',
 			self::getType(),
 			self::getName(),
 			self::getValue(),
 			self::getClass(),
 			self::getExtra(),
+			self::getIcon(),
 			self::getLabel()
 		);
 		
