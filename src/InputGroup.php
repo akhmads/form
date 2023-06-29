@@ -3,7 +3,7 @@
 namespace Akhmads\Form;
 
 // ----------------------------------------------
-// Button
+// InputGroup
 // HTML form builder for Input Group
 // ----------------------------------------------
 	
