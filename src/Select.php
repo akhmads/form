@@ -3,17 +3,15 @@
 namespace Akhmads\Form;
 
 // ----------------------------------------------
-// InputText
-// HTML form builder for text input
+// Select
+// HTML form builder for select
 // ----------------------------------------------
-
-use \Akhmads\Form\InputGroup;
-
-class InputText
+	
+class Select
 {
 	protected static $theme;
-	protected static $type;
 	protected static $name;
+	protected static $option;
 	protected static $value;
 	protected static $label;
 	protected static $wrap;
@@ -79,8 +77,8 @@ class InputText
 		}
 
 		// reset variable
-		self::$type = 'text';
 		self::$name = null;
+		self::$option = [];
 		self::$value = null;
 		self::$label = null;
 		self::$wrap = null;
@@ -98,21 +96,6 @@ class InputText
 	}
 
 	// ----------------------------------------------
-	// Type attributes
-	// ----------------------------------------------
-
-	public function type( $type )
-	{
-		self::$type = $type;
-		return $this;
-	}
-
-	public function getType()
-	{
-		return self::$type;
-	}
-
-	// ----------------------------------------------
 	// Name attributes
 	// ----------------------------------------------
 
@@ -125,6 +108,32 @@ class InputText
 	public function getName()
 	{
 		return self::$name;
+	}
+
+	// ----------------------------------------------
+	// Option attributes
+	// ----------------------------------------------
+
+	public function option( $option )
+	{
+		self::$option = $option;
+		return $this;
+	}
+
+	public function getOption()
+	{
+		$value = self::getValue();
+		$option = [];
+		if( count(self::$option) > 0 )
+		{
+			foreach( self::$option as $key => $val )
+			{
+				$selected = '';
+				if( $value == $key ) $selected = ' selected';
+				$option[] = sprintf('<option value="%s"%s>%s</option>', $key, $selected, $val);
+			}
+		}
+		return implode("",$option);
 	}
 
 	// ----------------------------------------------
@@ -239,12 +248,11 @@ class InputText
 
 		// render all attributes to HTML template
 		$return = sprintf(
-			'<input type="%s" name="%s" value="%s" class="%s" %s>',
-			self::getType(),
+			'<select name="%s" class="%s" %s>%s</select>',
 			self::getName(),
-			self::getValue(),
 			self::getClass(),
-			self::getExtra()
+			self::getExtra(),
+			self::getOption()
 		);
 		
 		// editor with closure function for edit content of attribute
