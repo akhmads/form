@@ -20,6 +20,8 @@ class InputText
 	protected static $class;
 	protected static $extra;
 	protected static $editor;
+	protected static $append;
+	protected static $prepend;
 	private static $_instance = null;
 
 	public function __construct() { }
@@ -84,6 +86,8 @@ class InputText
 		self::$value = null;
 		self::$label = null;
 		self::$wrap = null;
+		self::$append = null;
+		self::$prepend = null;
 		self::$class = [];
 		self::$extra = [];
 		self::$editor = [];
@@ -173,6 +177,36 @@ class InputText
 	}
 
 	// ----------------------------------------------
+	// InputGroup append
+	// ----------------------------------------------
+
+	public function append( $append, $withText = TRUE )
+	{
+		self::$append = [ $append, $withText ];
+		return $this;
+	}
+
+	public function getAppend()
+	{
+		return self::$append;
+	}
+
+	// ----------------------------------------------
+	// InputGroup prepend
+	// ----------------------------------------------
+
+	public function prepend( $prepend, $withText = TRUE )
+	{
+		self::$prepend = [ $prepend, $withText ];
+		return $this;
+	}
+
+	public function getPrepend()
+	{
+		return self::$prepend;
+	}
+
+	// ----------------------------------------------
 	// Class attributes
 	// ----------------------------------------------
 
@@ -246,6 +280,32 @@ class InputText
 			self::getClass(),
 			self::getExtra()
 		);
+		
+		$prepend = self::getPrepend();
+		$append = self::getAppend();
+		// apply InputGroup prepend only
+		if( is_array($prepend) AND $append == null )
+		{
+			$pp_content = isset($prepend[0]) ? $prepend[0] : '';
+			$pp_withText = isset($prepend[1]) ? $prepend[1] : '';
+			$return = InputGroup::make($return)->prepend($pp_content, $pp_withText)->render();
+		}
+		// apply InputGroup append only
+		if( is_array($append) AND $prepend == null )
+		{
+			$ap_content = isset($append[0]) ? $append[0] : '';
+			$ap_withText = isset($append[1]) ? $append[1] : '';
+			$return = InputGroup::make($return)->append($ap_content, $ap_withText)->render();
+		}
+		// apply InputGroup append and prepend
+		if( is_array($append) AND is_array($prepend) )
+		{
+			$ap_content = isset($append[0]) ? $append[0] : '';
+			$ap_withText = isset($append[1]) ? $append[1] : '';
+			$pp_content = isset($prepend[0]) ? $prepend[0] : '';
+			$pp_withText = isset($prepend[1]) ? $prepend[1] : '';
+			$return = InputGroup::make($return)->append($ap_content, $ap_withText)->prepend($pp_content, $pp_withText)->render();
+		}
 		
 		// editor with closure function for edit content of attribute
 		if( is_array(self::$editor) AND count(self::$editor) > 0 )
