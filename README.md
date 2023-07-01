@@ -6,8 +6,8 @@ PHP class for HTML form builder and bootstrap elements
 - Textarea
 - Select
 - Checkbox
-- Radiobox
-- File Upload
+- Radiobox (on progress)
+- File Upload (on progress)
 - Select2 (on progress)
 
 ## Available bootstrap elements
